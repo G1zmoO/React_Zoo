@@ -1,6 +1,7 @@
 import Hero from '../components/Hero/Hero';
 import Categories from '../components/Categories/Categories';
 import DiscountBanner from '../components/DiscountBanner/DiscountBanner';
+import Sales from '../components/Sales/Sales';
 
 const Home = () => {
   return (
@@ -8,6 +9,7 @@ const Home = () => {
       <Hero />
       <Categories />
       <DiscountBanner />
+      <Sales />
     </div>
   );
 };
