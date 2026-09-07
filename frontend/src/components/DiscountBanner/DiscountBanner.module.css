@@ -1,0 +1,161 @@
+.section {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  padding: 32px 32px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(261deg, #2451c6 32.63%, #0d50ff 98.96%);
+  box-sizing: border-box;
+}
+
+.title {
+  margin: 0;
+  align-self: stretch;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 110%;
+  color: var(--color-white);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  width: 516px;
+  max-width: 100%;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 16px 32px;
+  border: 1px solid var(--color-white);
+  border-radius: 6px;
+  background: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 130%;
+  color: var(--color-white);
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--color-white);
+  opacity: 1;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.submit {
+  width: 100%;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 130%;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.submit:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.message {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+.image {
+  flex: 1;
+  height: 360px;
+  min-width: 0;
+  object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    padding: 24px 24px 0;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .form {
+    width: 100%;
+  }
+
+  .image {
+    width: 100%;
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 24px 16px;
+  }
+
+  .card {
+    padding: 20px 20px 0;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .input,
+  .submit {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}
