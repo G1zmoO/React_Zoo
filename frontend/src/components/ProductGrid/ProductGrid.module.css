@@ -1,0 +1,78 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.filterLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-black);
+  white-space: nowrap;
+}
+
+.priceInput {
+  width: 80px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-grey-divider);
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--color-black);
+  box-sizing: border-box;
+}
+
+.priceInput:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 1px;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-black);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.checkboxGroup input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-blue);
+  cursor: pointer;
+}
+
+.sortSelect {
+  padding: 8px 16px;
+  border: 1px solid var(--color-grey-divider);
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    gap: 16px 24px;
+  }
+}

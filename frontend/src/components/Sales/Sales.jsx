@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import api, { API_BASE_URL } from '../../api/axios';
+import api from '../../api/axios';
+import ProductCard from '../ProductCard/ProductCard';
 import styles from './Sales.module.css';
 
 const PRODUCTS_TO_SHOW = 4;
@@ -36,34 +37,9 @@ const Sales = () => {
       </div>
 
       <ul className={styles.list}>
-        {products.map((product) => {
-          const discountPercent = Math.round(
-            (1 - product.discont_price / product.price) * 100
-          );
-
-          return (
-            <li key={product.id} className={styles.card}>
-              <Link to={`/products/${product.id}`} className={styles.cardLink}>
-                <div className={styles.imageWrapper}>
-                  <img
-                    src={`${API_BASE_URL}${product.image}`}
-                    alt={product.title}
-                    className={styles.image}
-                  />
-                  <span className={styles.badge}>-{discountPercent}%</span>
-                </div>
-
-                <div className={styles.info}>
-                  <p className={styles.name}>{product.title}</p>
-                  <p className={styles.price}>
-                    <span className={styles.newPrice}>${product.discont_price}</span>
-                    <span className={styles.oldPrice}>${product.price}</span>
-                  </p>
-                </div>
-              </Link>
-            </li>
-          );
-        })}
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </ul>
     </section>
   );

@@ -30,7 +30,7 @@
 }
 
 .card {
-  flex: 1 1 calc(25% - 24px);
+  flex: 0 1 calc(25% - 24px);
   min-width: 220px;
   list-style: none;
 }
