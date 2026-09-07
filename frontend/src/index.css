@@ -1,0 +1,30 @@
+:root {
+  --color-blue: #0d50ff;
+  --color-black: #282828;
+  --color-white: #ffffff;
+  --color-grey-divider: #dddddd;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--color-black);
+  background-color: #f0f0f0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

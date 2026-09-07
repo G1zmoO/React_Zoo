@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router-dom';
+import Header from './Header/Header';
+import styles from './MainLayout.module.css';
 
 const MainLayout = () => {
   return (
-    <div className="main-layout">
-      <header className="main-layout__header">{/* шапка сайта */}</header>
+    <div className={styles.layout}>
+      <Header />
 
       <main className="main-layout__content">
         <Outlet />
