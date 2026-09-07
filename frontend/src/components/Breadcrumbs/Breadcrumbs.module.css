@@ -1,0 +1,43 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.divider {
+  width: 16px;
+  height: 1px;
+  background-color: var(--color-grey-divider);
+  margin: 0 16px;
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid var(--color-grey-divider);
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 126%;
+  color: var(--color-grey);
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+a.crumb:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.active {
+  color: var(--color-black);
+}
