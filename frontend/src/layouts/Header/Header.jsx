@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
 import { ReactComponent as CartIcon } from '../../assets/icons/cart.svg';
 import styles from './Header.module.css';
@@ -10,7 +11,11 @@ const NAV_LINKS = [
   { path: '/sales', label: 'All sales' },
 ];
 
-const Header = ({ cartItemsCount = 0 }) => {
+const Header = () => {
+  const cartItemsCount = useSelector((state) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0)
+  );
+
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.logo} aria-label="Pet Shop">

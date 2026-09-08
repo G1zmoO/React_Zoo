@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { API_BASE_URL } from '../../api/axios';
+import { addItem } from '../../store/cartSlice';
 import styles from './ProductCard.module.css';
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   const hasDiscount = Boolean(product.discont_price && product.discont_price < product.price);
   const discountPercent = hasDiscount
     ? Math.round((1 - product.discont_price / product.price) * 100)
@@ -10,7 +13,15 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = (event) => {
     event.preventDefault();
-    // TODO: wire up once the cart is implemented
+    dispatch(
+      addItem({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        discont_price: product.discont_price,
+        image: product.image,
+      })
+    );
   };
 
   return (
