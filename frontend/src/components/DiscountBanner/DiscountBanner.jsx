@@ -66,13 +66,16 @@ const DiscountBanner = () => {
               />
             </div>
 
-            <button type="submit" className={styles.submit} disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending...' : 'Get a discount'}
+            <button
+              type="submit"
+              className={status === 'success' ? `${styles.submit} ${styles.submitted}` : styles.submit}
+              disabled={status === 'sending' || status === 'success'}
+            >
+              {status === 'sending' && 'Sending...'}
+              {status === 'success' && 'Request submitted'}
+              {status !== 'sending' && status !== 'success' && 'Get a discount'}
             </button>
 
-            {status === 'success' && (
-              <p className={styles.message}>Thank you! We will send your discount soon.</p>
-            )}
             {status === 'error' && (
               <p className={styles.message}>Something went wrong. Please try again.</p>
             )}

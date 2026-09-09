@@ -56,11 +56,12 @@
   font-weight: 600;
   line-height: 130%;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
 }
 
 .ctaButton:hover {
-  opacity: 0.85;
+  background-color: var(--color-black);
 }
 
 @media (max-width: 1024px) {

@@ -68,6 +68,14 @@
   background-color: var(--color-black);
 }
 
+.added,
+.added:hover,
+.added:focus-visible {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: 1px solid var(--color-black);
+}
+
 .cardLink:hover .addToCart,
 .cardLink:focus-within .addToCart {
   opacity: 1;

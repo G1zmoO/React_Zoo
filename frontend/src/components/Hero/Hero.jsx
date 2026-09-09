@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import heroBg from '../../assets/images/hero-bg.jpg';
 import styles from './Hero.module.css';
 
@@ -9,9 +10,9 @@ const Hero = () => {
 
       <div className={styles.content}>
         <h1 className={styles.title}>Amazing Discounts on Pets Products!</h1>
-        <button type="button" className={styles.ctaButton}>
-          Add to cart
-        </button>
+        <Link to="/sales" className={styles.ctaButton}>
+          Check out
+        </Link>
       </div>
     </section>
   );

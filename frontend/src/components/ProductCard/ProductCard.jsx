@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { API_BASE_URL } from '../../api/axios';
@@ -6,6 +7,7 @@ import styles from './ProductCard.module.css';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
+  const [justAdded, setJustAdded] = useState(false);
   const hasDiscount = Boolean(product.discont_price && product.discont_price < product.price);
   const discountPercent = hasDiscount
     ? Math.round((1 - product.discont_price / product.price) * 100)
@@ -22,6 +24,7 @@ const ProductCard = ({ product }) => {
         image: product.image,
       })
     );
+    setJustAdded(true);
   };
 
   return (
@@ -34,8 +37,12 @@ const ProductCard = ({ product }) => {
             className={styles.image}
           />
           {hasDiscount && <span className={styles.badge}>-{discountPercent}%</span>}
-          <button type="button" className={styles.addToCart} onClick={handleAddToCart}>
-            Add to cart
+          <button
+            type="button"
+            className={justAdded ? `${styles.addToCart} ${styles.added}` : styles.addToCart}
+            onClick={handleAddToCart}
+          >
+            {justAdded ? 'Added' : 'Add to cart'}
           </button>
         </div>
 
