@@ -7,4 +7,12 @@ const store = configureStore({
   },
 });
 
+store.subscribe(() => {
+  try {
+    localStorage.setItem('cart', JSON.stringify(store.getState().cart.items));
+  } catch (error) {
+    // localStorage unavailable; cart just won't persist across reloads
+  }
+});
+
 export default store;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,17 @@ import styles from './CartPage.module.css';
 const getUnitPrice = (item) =>
   item.discont_price && item.discont_price < item.price ? item.discont_price : item.price;
 
+const ORDER_FORM_STORAGE_KEY = 'orderForm';
+
+const loadStoredOrderForm = () => {
+  try {
+    const stored = localStorage.getItem(ORDER_FORM_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
+  } catch (error) {
+    return {};
+  }
+};
+
 const CartPage = () => {
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
@@ -20,8 +31,16 @@ const CartPage = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: loadStoredOrderForm() });
+
+  useEffect(() => {
+    const subscription = watch((values) => {
+      localStorage.setItem(ORDER_FORM_STORAGE_KEY, JSON.stringify(values));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const total = items.reduce((sum, item) => sum + getUnitPrice(item) * item.quantity, 0);
 
@@ -41,6 +60,7 @@ const CartPage = () => {
       });
       dispatch(clearCart());
       reset();
+      localStorage.removeItem(ORDER_FORM_STORAGE_KEY);
       setOrderPlaced(true);
     } catch (error) {
       // request failed; the user can retry

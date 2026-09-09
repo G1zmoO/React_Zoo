@@ -128,6 +128,64 @@
   object-fit: cover;
 }
 
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(40, 40, 40, 0.6);
+  z-index: 100;
+  padding: 24px;
+}
+
+.popup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  max-width: 548px;
+  padding: 32px;
+  border-radius: 12px;
+  background-color: var(--color-blue);
+  box-sizing: border-box;
+}
+
+.popupClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popupTitle {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 110%;
+  color: var(--color-white);
+}
+
+.popupText {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 110%;
+  color: var(--color-white);
+}
+
 @media (max-width: 1024px) {
   .card {
     padding: 24px 24px 0;

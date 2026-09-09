@@ -4,14 +4,27 @@ import discountImage from '../../assets/images/discount-banner.svg';
 import styles from './DiscountBanner.module.css';
 
 const INITIAL_FORM = { name: '', phone: '', email: '' };
+const DISCOUNT_FORM_STORAGE_KEY = 'discountForm';
+
+const loadStoredForm = () => {
+  try {
+    const stored = localStorage.getItem(DISCOUNT_FORM_STORAGE_KEY);
+    return stored ? { ...INITIAL_FORM, ...JSON.parse(stored) } : INITIAL_FORM;
+  } catch (error) {
+    return INITIAL_FORM;
+  }
+};
 
 const DiscountBanner = () => {
-  const [form, setForm] = useState(INITIAL_FORM);
+  const [form, setForm] = useState(loadStoredForm);
   const [status, setStatus] = useState('idle');
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    const nextForm = { ...form, [name]: value };
+    setForm(nextForm);
+    localStorage.setItem(DISCOUNT_FORM_STORAGE_KEY, JSON.stringify(nextForm));
   };
 
   const handleSubmit = async (event) => {
@@ -21,7 +34,7 @@ const DiscountBanner = () => {
     try {
       await api.post('/sale/send', form);
       setStatus('success');
-      setForm(INITIAL_FORM);
+      setShowPopup(true);
     } catch (error) {
       setStatus('error');
     }
@@ -82,6 +95,33 @@ const DiscountBanner = () => {
           </form>
         </div>
       </div>
+
+      {showPopup && (
+        <div className={styles.overlay}>
+          <div className={styles.popup}>
+            <button
+              type="button"
+              className={styles.popupClose}
+              aria-label="Close"
+              onClick={() => setShowPopup(false)}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="#FFF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+            <h2 className={styles.popupTitle}>Congratulations!</h2>
+            <p className={styles.popupText}>
+              Your discount request has been received. We will contact you shortly with your 5%
+              discount code.
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

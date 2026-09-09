@@ -10,15 +10,25 @@
   text-align: center;
 }
 
+.errorCode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
 .image {
-  max-width: 100%;
-  height: auto;
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
 }
 
 .digit {
-  fill: var(--color-blue);
   font-family: 'Montserrat', sans-serif;
+  font-size: 160px;
   font-weight: 700;
+  line-height: 1;
+  color: var(--color-blue);
 }
 
 .title {
@@ -68,5 +78,18 @@
 
   .title {
     font-size: 32px;
+  }
+
+  .image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .digit {
+    font-size: 88px;
+  }
+
+  .errorCode {
+    gap: 8px;
   }
 }
