@@ -9,7 +9,7 @@ const CONTACT_INFO = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: 'Instagram', href: 'https://instagram.com', Icon: InstagramIcon },
+  { label: 'Instagram', href: 'https://www.instagram.com/itcareerhub/', Icon: InstagramIcon },
   { label: 'WhatsApp', href: 'https://wa.me/493091588492', Icon: WhatsappIcon },
 ];
 

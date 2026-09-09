@@ -159,8 +159,10 @@ const CartPage = () => {
             </button>
             <h2 className={styles.popupTitle}>Congratulations!</h2>
             <p className={styles.popupText}>
-              Your order has been successfully placed on the website. A manager will contact
-              you shortly to confirm your order.
+              Your order has been successfully placed on the website.
+            </p>
+            <p className={styles.popupText}>
+              A manager will contact you shortly to confirm your order.
             </p>
           </div>
         </div>
