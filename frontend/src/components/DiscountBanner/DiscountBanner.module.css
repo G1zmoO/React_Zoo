@@ -57,25 +57,19 @@
 .input {
   width: 100%;
   padding: 16px 32px;
-  border: 1px solid var(--color-white);
+  border: 1px solid var(--color-grey-divider);
   border-radius: 6px;
-  background: transparent;
+  background-color: var(--color-white);
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 130%;
-  color: var(--color-white);
+  color: var(--color-black);
   box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: var(--color-white);
-  opacity: 1;
-}
-
-.input:focus-visible {
-  outline: 2px solid var(--color-white);
-  outline-offset: 2px;
+  color: var(--color-grey);
 }
 
 .submit {

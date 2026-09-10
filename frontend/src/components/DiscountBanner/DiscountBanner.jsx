@@ -1,40 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import api from '../../api/axios';
 import discountImage from '../../assets/images/discount-banner.svg';
 import styles from './DiscountBanner.module.css';
 
-const INITIAL_FORM = { name: '', phone: '', email: '' };
 const DISCOUNT_FORM_STORAGE_KEY = 'discountForm';
+const SUBMITTED_RESET_DELAY = 2000;
 
 const loadStoredForm = () => {
   try {
     const stored = localStorage.getItem(DISCOUNT_FORM_STORAGE_KEY);
-    return stored ? { ...INITIAL_FORM, ...JSON.parse(stored) } : INITIAL_FORM;
+    return stored ? JSON.parse(stored) : {};
   } catch (error) {
-    return INITIAL_FORM;
+    return {};
   }
 };
 
 const DiscountBanner = () => {
-  const [form, setForm] = useState(loadStoredForm);
   const [status, setStatus] = useState('idle');
   const [showPopup, setShowPopup] = useState(false);
+  const resetTimeoutRef = useRef(null);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    const nextForm = { ...form, [name]: value };
-    setForm(nextForm);
-    localStorage.setItem(DISCOUNT_FORM_STORAGE_KEY, JSON.stringify(nextForm));
-  };
+  const { register, handleSubmit, watch, reset } = useForm({
+    defaultValues: loadStoredForm(),
+    shouldUseNativeValidation: true,
+  });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const subscription = watch((values) => {
+      localStorage.setItem(DISCOUNT_FORM_STORAGE_KEY, JSON.stringify(values));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  useEffect(() => () => clearTimeout(resetTimeoutRef.current), []);
+
+  const onSubmit = async (formData) => {
     setStatus('sending');
 
     try {
-      await api.post('/sale/send', form);
+      await api.post('/sale/send', formData);
       setStatus('success');
       setShowPopup(true);
+      reset();
+      localStorage.removeItem(DISCOUNT_FORM_STORAGE_KEY);
+      clearTimeout(resetTimeoutRef.current);
+      resetTimeoutRef.current = setTimeout(() => setStatus('idle'), SUBMITTED_RESET_DELAY);
     } catch (error) {
       setStatus('error');
     }
@@ -48,34 +59,41 @@ const DiscountBanner = () => {
         <div className={styles.content}>
           <img src={discountImage} alt="" aria-hidden="true" className={styles.image} />
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.inputs}>
               <input
                 className={styles.input}
-                type="text"
-                name="name"
                 placeholder="Name"
-                value={form.name}
-                onChange={handleChange}
-                required
+                {...register('name', {
+                  required: 'Name is required',
+                  minLength: { value: 2, message: 'Name is too short' },
+                })}
               />
+
               <input
                 className={styles.input}
-                type="tel"
-                name="phone"
                 placeholder="Phone number"
-                value={form.phone}
-                onChange={handleChange}
-                required
+                type="tel"
+                {...register('phone', {
+                  required: 'Phone number is required',
+                  pattern: {
+                    value: /^[+\d][\d\s-]{6,}$/,
+                    message: 'Enter a valid phone number',
+                  },
+                })}
               />
+
               <input
                 className={styles.input}
-                type="email"
-                name="email"
                 placeholder="Email"
-                value={form.email}
-                onChange={handleChange}
-                required
+                type="email"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Enter a valid email',
+                  },
+                })}
               />
             </div>
 

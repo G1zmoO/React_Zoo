@@ -33,7 +33,14 @@ const CategoryProducts = () => {
 
       <h1 className={styles.title}>{category?.title ?? 'Loading...'}</h1>
 
-      <ProductGrid key={id} products={products} />
+      <ProductGrid
+        key={id}
+        products={products}
+        breadcrumbTrail={[
+          { label: 'Categories', path: '/categories' },
+          { label: category?.title ?? '...', path: `/categories/${id}` },
+        ]}
+      />
     </div>
   );
 };

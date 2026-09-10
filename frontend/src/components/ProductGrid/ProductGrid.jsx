@@ -7,7 +7,7 @@ const getDisplayPrice = (product) =>
     ? product.discont_price
     : product.price;
 
-const ProductGrid = ({ products, showDiscountFilter = true }) => {
+const ProductGrid = ({ products, showDiscountFilter = true, breadcrumbTrail = [] }) => {
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
   const [onlyDiscounted, setOnlyDiscounted] = useState(false);
@@ -94,7 +94,7 @@ const ProductGrid = ({ products, showDiscountFilter = true }) => {
 
       <ul className={styles.list}>
         {visibleProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} breadcrumbTrail={breadcrumbTrail} />
         ))}
       </ul>
     </>

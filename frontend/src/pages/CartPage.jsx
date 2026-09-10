@@ -27,13 +27,10 @@ const CartPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm({ defaultValues: loadStoredOrderForm() });
+  const { register, handleSubmit, reset, watch } = useForm({
+    defaultValues: loadStoredOrderForm(),
+    shouldUseNativeValidation: true,
+  });
 
   useEffect(() => {
     const subscription = watch((values) => {
@@ -97,59 +94,50 @@ const CartPage = () => {
         <div className={styles.orderForm}>
           <h2 className={styles.orderTitle}>Order details</h2>
 
-          <div className={styles.summaryRow}>
+          <div className={styles.summary}>
             <span className={styles.itemsCount}>{items.length} items</span>
-            <div className={styles.totalGroup}>
+            <div className={styles.totalRow}>
               <span className={styles.totalLabel}>Total</span>
               <span className={styles.totalValue}>${total}</span>
             </div>
           </div>
 
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.inputs}>
-              <div className={styles.field}>
-                <input
-                  className={styles.input}
-                  placeholder="Name"
-                  {...register('name', {
-                    required: 'Name is required',
-                    minLength: { value: 2, message: 'Name is too short' },
-                  })}
-                />
-                {errors.name && <p className={styles.error}>{errors.name.message}</p>}
-              </div>
+              <input
+                className={styles.input}
+                placeholder="Name"
+                {...register('name', {
+                  required: 'Name is required',
+                  minLength: { value: 2, message: 'Name is too short' },
+                })}
+              />
 
-              <div className={styles.field}>
-                <input
-                  className={styles.input}
-                  placeholder="Phone number"
-                  type="tel"
-                  {...register('phone', {
-                    required: 'Phone number is required',
-                    pattern: {
-                      value: /^[+\d][\d\s-]{6,}$/,
-                      message: 'Enter a valid phone number',
-                    },
-                  })}
-                />
-                {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}
-              </div>
+              <input
+                className={styles.input}
+                placeholder="Phone number"
+                type="tel"
+                {...register('phone', {
+                  required: 'Phone number is required',
+                  pattern: {
+                    value: /^[+\d][\d\s-]{6,}$/,
+                    message: 'Enter a valid phone number',
+                  },
+                })}
+              />
 
-              <div className={styles.field}>
-                <input
-                  className={styles.input}
-                  placeholder="Email"
-                  type="email"
-                  {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: 'Enter a valid email',
-                    },
-                  })}
-                />
-                {errors.email && <p className={styles.error}>{errors.email.message}</p>}
-              </div>
+              <input
+                className={styles.input}
+                placeholder="Email"
+                type="email"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Enter a valid email',
+                  },
+                })}
+              />
             </div>
 
             <button type="submit" className={styles.submitButton} disabled={isSubmitting}>

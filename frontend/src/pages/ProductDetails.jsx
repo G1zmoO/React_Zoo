@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import api, { API_BASE_URL } from '../api/axios';
 import { addItem } from '../store/cartSlice';
@@ -7,9 +7,11 @@ import Breadcrumbs from '../components/Breadcrumbs/Breadcrumbs';
 import styles from './ProductDetails.module.css';
 
 const DESCRIPTION_PREVIEW_LENGTH = 260;
+const ADDED_RESET_DELAY = 2000;
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState(null);
@@ -17,6 +19,9 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [isDescriptionExpanded, setDescriptionExpanded] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
+  const resetTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(resetTimeoutRef.current), []);
 
   useEffect(() => {
     setProduct(null);
@@ -24,6 +29,7 @@ const ProductDetails = () => {
     setQuantity(1);
     setDescriptionExpanded(false);
     setJustAdded(false);
+    clearTimeout(resetTimeoutRef.current);
 
     api.get(`/products/${id}`).then(({ data }) => {
       if (data.status === 'ERR') return;
@@ -51,12 +57,15 @@ const ProductDetails = () => {
     : 0;
   const imageUrl = `${API_BASE_URL}${product.image}`;
 
+  const navigationTrail = location.state?.breadcrumbTrail;
   const breadcrumbItems = [
     { label: 'Main page', path: '/' },
-    { label: 'Categories', path: '/categories' },
-    ...(categoryTitle
-      ? [{ label: categoryTitle, path: `/categories/${product.categoryId}` }]
-      : []),
+    ...(navigationTrail ?? [
+      { label: 'Categories', path: '/categories' },
+      ...(categoryTitle
+        ? [{ label: categoryTitle, path: `/categories/${product.categoryId}` }]
+        : []),
+    ]),
     { label: product.title },
   ];
 
@@ -82,6 +91,8 @@ const ProductDetails = () => {
       })
     );
     setJustAdded(true);
+    clearTimeout(resetTimeoutRef.current);
+    resetTimeoutRef.current = setTimeout(() => setJustAdded(false), ADDED_RESET_DELAY);
   };
 
   return (

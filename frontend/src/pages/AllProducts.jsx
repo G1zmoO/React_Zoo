@@ -21,7 +21,10 @@ const AllProducts = () => {
 
       <h1 className={styles.title}>All products</h1>
 
-      <ProductGrid products={products} />
+      <ProductGrid
+        products={products}
+        breadcrumbTrail={[{ label: 'All products', path: '/products' }]}
+      />
     </div>
   );
 };

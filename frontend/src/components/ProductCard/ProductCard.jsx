@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { API_BASE_URL } from '../../api/axios';
 import { addItem } from '../../store/cartSlice';
 import styles from './ProductCard.module.css';
 
-const ProductCard = ({ product }) => {
+const ADDED_RESET_DELAY = 2000;
+
+const ProductCard = ({ product, breadcrumbTrail = [] }) => {
   const dispatch = useDispatch();
   const [justAdded, setJustAdded] = useState(false);
+  const resetTimeoutRef = useRef(null);
   const hasDiscount = Boolean(product.discont_price && product.discont_price < product.price);
   const discountPercent = hasDiscount
     ? Math.round((1 - product.discont_price / product.price) * 100)
     : 0;
+
+  useEffect(() => () => clearTimeout(resetTimeoutRef.current), []);
 
   const handleAddToCart = (event) => {
     event.preventDefault();
@@ -25,11 +30,17 @@ const ProductCard = ({ product }) => {
       })
     );
     setJustAdded(true);
+    clearTimeout(resetTimeoutRef.current);
+    resetTimeoutRef.current = setTimeout(() => setJustAdded(false), ADDED_RESET_DELAY);
   };
 
   return (
     <li className={styles.card}>
-      <Link to={`/products/${product.id}`} className={styles.cardLink}>
+      <Link
+        to={`/products/${product.id}`}
+        state={{ breadcrumbTrail }}
+        className={styles.cardLink}
+      >
         <div className={styles.imageWrapper}>
           <img
             src={`${API_BASE_URL}${product.image}`}

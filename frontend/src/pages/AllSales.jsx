@@ -24,7 +24,11 @@ const AllSales = () => {
 
       <h1 className={styles.title}>Discounted items</h1>
 
-      <ProductGrid products={products} showDiscountFilter={false} />
+      <ProductGrid
+        products={products}
+        showDiscountFilter={false}
+        breadcrumbTrail={[{ label: 'All sales', path: '/sales' }]}
+      />
     </div>
   );
 };
