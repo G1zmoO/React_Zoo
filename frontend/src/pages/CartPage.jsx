@@ -40,6 +40,7 @@ const CartPage = () => {
   }, [watch]);
 
   const total = items.reduce((sum, item) => sum + getUnitPrice(item) * item.quantity, 0);
+  const totalItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const onSubmit = async (formData) => {
     setIsSubmitting(true);
@@ -95,7 +96,7 @@ const CartPage = () => {
           <h2 className={styles.orderTitle}>Order details</h2>
 
           <div className={styles.summary}>
-            <span className={styles.itemsCount}>{items.length} items</span>
+            <span className={styles.itemsCount}>{totalItemsCount} items</span>
             <div className={styles.totalRow}>
               <span className={styles.totalLabel}>Total</span>
               <span className={styles.totalValue}>${total}</span>
